@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Tag List View -->
+        <record id="view_cms_tag_tree" model="ir.ui.view">
+            <field name="name">cms.tag.tree</field>
+            <field name="model">cms.tag</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="color"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Tag Form View -->
+        <record id="view_cms_tag_form" model="ir.ui.view">
+            <field name="name">cms.tag.form</field>
+            <field name="model">cms.tag</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="color" widget="color"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Tag Search View -->
+        <record id="view_cms_tag_search" model="ir.ui.view">
+            <field name="name">cms.tag.search</field>
+            <field name="model">cms.tag</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Action window sudah didefinisikan di cms_menu.xml, jadi tidak perlu didefinisikan di sini lagi -->
+        
+        <!-- Ini adalah komentar yang valid -->
+
+        <menuitem id="menu_cms_tag_action" 
+                  name="Tags" 
+                  parent="menu_cms_configuration"  
+                  action="action_cms_tag" 
+                  sequence="30"/>
+    </data>
+</odoo>

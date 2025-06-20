@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="cms_content_type_post" model="cms.content.type">
+            <field name="name">Post</field>
+            <field name="code">post</field>
+            <field name="description">A standard blog post.</field>
+        </record>
+        
+        <record id="cms_content_type_page" model="cms.content.type">
+            <field name="name">Page</field>
+            <field name="code">page</field>
+            <field name="description">A static page.</field>
+        </record>
+        
+        <record id="cms_content_type_news" model="cms.content.type">
+            <field name="name">News</field>
+            <field name="code">news</field>
+            <field name="description">A news article.</field>
+        </record>
+    </data>
+</odoo>

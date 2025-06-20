@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Content List View -->
+        <record id="view_cms_content_list" model="ir.ui.view">
+            <field name="name">cms.content.list</field>
+            <field name="model">cms.content</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="featured_image" widget="image" width="50" height="50" class="oe_avatar"/>
+                    <field name="name"/>
+                    <field name="content_type_id"/>
+                    <field name="category_id"/>
+                    <field name="author_id"/>
+                    <field name="date_created"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Content Form View -->
+        <record id="view_cms_content_form" model="ir.ui.view">
+            <field name="name">cms.content.form</field>
+            <field name="model">cms.content</field>
+            <field name="type">form</field>  <!-- Tambahkan field type -->
+            <field name="arch" type="xml">
+                <form class="o_wordpress_post_form">
+                    <header>
+                        <button string="Publish" type="object" name="action_publish" class="oe_highlight btn-primary" invisible="state == 'published'"/>
+                        <button string="Archive" type="object" name="action_archive" invisible="state == 'archived'"/>
+                        <button string="Save as Draft" type="object" name="action_draft" invisible="state == 'draft'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,published,archived"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name" placeholder="Enter title here..." style="width: 100%;"/></h1>
+                        </div>
+                        
+                        <!-- Toolbar mirip WordPress -->
+                        <div class="o_wp_toolbar d-flex justify-content-between mb-3">
+                            <div class="o_wp_post_info d-flex align-items-center">
+                                <span class="fw-bold me-2">Author:</span>
+                                <field name="author_id" class="me-4"/>
+                                <span class="fw-bold me-2">Created:</span>
+                                <field name="date_created" class="me-4"/>
+                                <span class="fw-bold me-2" invisible="state != 'published'">Published:</span>
+                                <field name="date_published" invisible="state != 'published'"/>
+                            </div>
+                            <div class="o_wp_actions">
+                                <button name="preview_post" string="Preview" type="object" class="btn btn-secondary btn-sm"/>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <!-- Kolom utama (konten) mirip WordPress (70% width) -->
+                            <div class="col-lg-9">
+                                <!-- Permalink (slug) -->
+                                <div class="permalink mb-3">
+                                    <label for="url_slug" class="fw-bold">Permalink:</label>
+                                    <span class="text-muted me-2">mywebsite.com/</span>
+                                    <field name="url_slug" class="d-inline" placeholder="post-slug"/>
+                                </div>
+                                
+                                <!-- Editor konten dengan tampilan penuh -->
+                                <div class="content_container bg-white p-2 mb-3">
+                                    <field name="content" widget="html" options="{'collaborative': true, 'resizable': true, 'height': '400px'}" placeholder="Write your content here..."/>
+                                </div>
+                                
+                                <!-- Excerpt -->
+                                <div class="excerpt_container bg-white p-2 mb-3">
+                                    <h3>Excerpt</h3>
+                                    <p class="text-muted small">Excerpts are optional hand-crafted summaries of your content.</p>
+                                    <field name="excerpt" placeholder="Write an excerpt (optional)"/>
+                                </div>
+                                
+                                <!-- SEO Section -->
+                                <div class="seo_container bg-white p-2 mb-3">
+                                    <h3>SEO Settings</h3>
+                                    <div class="mb-3">
+                                        <label for="meta_keywords">Meta Keywords</label>
+                                        <field name="meta_keywords" placeholder="keyword1, keyword2, keyword3"/>
+                                    </div>
+                                    <div>
+                                        <label for="meta_description">Meta Description</label>
+                                        <field name="meta_description" placeholder="Enter a meta description..."/>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Sidebar seperti WordPress (30% width) -->
+                            <div class="col-lg-3">
+                                <!-- Document Properties Panel -->
+                                <div class="o_wp_panel bg-white p-3 mb-3">
+                                    <h4>Document</h4>
+                                    <div class="mb-3">
+                                        <label for="content_type_id">Content Type</label>
+                                        <field name="content_type_id"/>
+                                    </div>
+                                </div>
+                                
+                                <!-- Featured Image Panel -->
+                                <div class="o_wp_panel bg-white p-3 mb-3">
+                                    <h4>Featured Image</h4>
+                                    <field name="featured_image" widget="image" class="d-block w-100 mb-2" options="{'size': [300, 200], 'zoom': true}"/>
+                                    <field name="featured_image_filename" invisible="1"/>
+                                </div>
+                                
+                                <!-- Categories Panel -->
+                                <div class="o_wp_panel bg-white p-3 mb-3">
+                                    <h4>Categories</h4>
+                                    <field name="category_id"/>
+                                </div>
+                                
+                                <!-- Tags Panel -->
+                                <div class="o_wp_panel bg-white p-3 mb-3">
+                                    <h4>Tags</h4>
+                                    <field name="tag_ids" widget="many2many_tags"/>
+                                </div>
+                                
+                                <!-- Image Gallery Panel -->
+                                <div class="o_wp_panel bg-white p-3 mb-3">
+                                    <h4>Image Gallery</h4>
+                                    <field name="image_ids" mode="kanban">
+                                        <kanban>
+                                            <field name="id"/>
+                                            <field name="name"/>
+                                            <field name="image"/>
+                                            <field name="sequence"/>
+                                            <field name="is_published"/>
+                                            <templates>
+                                                <t t-name="kanban-box">
+                                                    <div class="oe_kanban_global_click">
+                                                        <div class="o_kanban_image">
+                                                            <img t-att-src="kanban_image('cms.content.image', 'image', record.id.raw_value)" alt="Image" class="o_image_64_contain"/>
+                                                        </div>
+                                                        <div class="oe_kanban_details">
+                                                            <strong class="o_kanban_record_title">
+                                                                <field name="name"/>
+                                                            </strong>
+                                                            <div class="d-flex align-items-center mt-1">
+                                                                <field name="sequence" widget="handle" class="me-2"/>
+                                                                <div t-if="!record.is_published.raw_value" class="badge bg-danger ms-auto">
+                                                                    Hidden
+                                                                </div>
+                                                                <div t-else="" class="badge bg-success ms-auto">
+                                                                    Visible
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </templates>
+                                        </kanban>
+                                        <form>
+                                            <sheet>
+                                                <field name="image" widget="image" class="mb-3" options="{'zoom': true}"/>
+                                                <group>
+                                                    <field name="name" placeholder="Image Title"/>
+                                                    <field name="image_filename" invisible="1"/>
+                                                    <field name="description" placeholder="Image Description"/>
+                                                    <field name="sequence"/>
+                                                    <field name="is_published"/>
+                                                </group>
+                                            </sheet>
+                                        </form>
+                                    </field>
+                                    <div class="text-center mt-2">
+                                        <button string="Add Image" name="action_add_image" type="object" class="btn btn-secondary btn-sm"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Kanban View -->
+        <record id="view_cms_content_kanban" model="ir.ui.view">
+            <field name="name">cms.content.kanban</field>
+            <field name="model">cms.content</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="featured_image"/>
+                    <field name="content_type_id"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="o_kanban_image">
+                                    <img t-att-src="kanban_image('cms.content', 'featured_image', record.id.raw_value)" alt="Featured Image" class="o_image_64_contain"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name"/>
+                                    </strong>
+                                    <div class="o_kanban_tags_section">
+                                        <field name="content_type_id"/>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="state" widget="label_selection" 
+                                               options="{'classes': {
+                                                   'draft': 'bg-secondary', 
+                                                   'published': 'bg-success',
+                                                   'archived': 'bg-warning'}}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_cms_content_tree" model="ir.ui.view">
+            <field name="name">cms.content.tree</field>
+            <field name="model">cms.content</field>
+            <field name="arch" type="xml">
+                <list>  <!-- Ubah dari tree menjadi list -->
+                    <field name="name"/>
+                    <field name="content_type_id"/>
+                    <field name="category_id"/>
+                    <field name="author_id"/>
+                    <field name="date_published"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+    </data>
+</odoo>

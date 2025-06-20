@@ -1,0 +1,24 @@
+<odoo>
+    <template id="cms_content_template" name="CMS Content">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1 t-field="content.title"/>
+                <img t-field="content.image_feature" alt="Image Feature"/>
+                <p t-field="content.excerpt"/>
+                <div t-field="content.description"/>
+                <div class="tags">
+                    <t t-foreach="content.tags" t-as="tag">
+                        <span class="badge badge-info" t-field="tag.name"/>
+                    </t>
+                </div>
+                <div class="category">
+                    <strong>Category:</strong> <span t-field="content.category.name"/>
+                </div>
+                <div class="meta">
+                    <meta name="keywords" t-field="content.meta_keywords"/>
+                    <meta name="description" t-field="content.meta_description"/>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

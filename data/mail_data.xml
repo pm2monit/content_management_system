@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="mt_content_published" model="mail.message.subtype">
+            <field name="name">Content Published</field>
+            <field name="res_model">cms.content</field>
+            <field name="default" eval="True"/>
+            <field name="description">Content has been published</field>
+        </record>
+    </data>
+</odoo>

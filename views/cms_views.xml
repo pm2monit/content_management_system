@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Content Type Form View -->
+        <record id="view_cms_content_type_form" model="ir.ui.view">
+            <field name="name">cms.content.type.form</field>
+            <field name="model">cms.content.type</field>
+            <field name="arch" type="xml">
+                <form string="Content Type">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="description"/>
+                            <field name="active"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

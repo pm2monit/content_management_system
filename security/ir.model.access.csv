@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cms_content_type_user,cms.content.type user,model_cms_content_type,content_management_system.group_cms_user,1,0,0,0
+access_cms_content_type_manager,cms.content.type manager,model_cms_content_type,content_management_system.group_cms_manager,1,1,1,1
+access_cms_content_user,cms.content user,model_cms_content,content_management_system.group_cms_user,1,1,1,0
+access_cms_content_manager,cms.content manager,model_cms_content,content_management_system.group_cms_manager,1,1,1,1
+access_cms_category_user,cms.category user,model_cms_category,content_management_system.group_cms_user,1,0,0,0
+access_cms_category_manager,cms.category manager,model_cms_category,content_management_system.group_cms_manager,1,1,1,1
+access_cms_tag_user,cms.tag user,model_cms_tag,content_management_system.group_cms_user,1,0,0,0
+access_cms_tag_manager,cms.tag manager,model_cms_tag,content_management_system.group_cms_manager,1,1,1,1
+access_cms_content_image_user,cms.content.image user,model_cms_content_image,content_management_system.group_cms_user,1,1,1,1
+access_cms_content_image_manager,cms.content.image manager,model_cms_content_image,content_management_system.group_cms_manager,1,1,1,1

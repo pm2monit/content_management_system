@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Root Menu -->
+        <menuitem id="menu_cms_root" 
+                  name="Content Management" 
+                  web_icon="content_management_system,static/description/icon.png" 
+                  sequence="10"/>
+        
+        <!-- Action untuk Content -->
+        <record id="action_cms_content" model="ir.actions.act_window">
+            <field name="name">Content</field>
+            <field name="res_model">cms.content</field>
+            <field name="view_mode">kanban,list,form</field>
+        </record>
+        
+        <!-- Submenu Level 1: Content -->
+        <menuitem id="menu_cms_content" 
+                  name="Content" 
+                  parent="menu_cms_root" 
+                  action="action_cms_content" 
+                  sequence="10"/>
+        
+        <!-- Submenu Level 1: Configuration -->
+        <menuitem id="menu_cms_configuration" 
+                  name="Configuration" 
+                  parent="menu_cms_root" 
+                  sequence="100"/>
+        
+        <!-- Action untuk Content Types -->
+        <record id="action_cms_content_type" model="ir.actions.act_window">
+            <field name="name">Content Types</field>
+            <field name="res_model">cms.content.type</field>
+            <field name="view_mode">list,form</field>
+        </record>
+        
+        <!-- Configuration Submenu: Content Types -->
+        <menuitem id="menu_cms_content_type_action" 
+                  name="Content Types" 
+                  parent="menu_cms_configuration" 
+                  action="action_cms_content_type" 
+                  sequence="10"/>
+        
+        <!-- Action untuk Categories -->
+        <record id="action_cms_category" model="ir.actions.act_window">
+            <field name="name">Categories</field>
+            <field name="res_model">cms.category</field>
+            <field name="view_mode">list,form</field>
+        </record>
+        
+        <!-- Configuration Submenu: Categories -->
+        <menuitem id="menu_cms_category_action" 
+                  name="Categories" 
+                  parent="menu_cms_configuration" 
+                  action="action_cms_category" 
+                  sequence="20"/>
+        
+        <!-- Action untuk Tags -->
+        <record id="action_cms_tag" model="ir.actions.act_window">
+            <field name="name">Tags</field>
+            <field name="res_model">cms.tag</field>
+            <field name="view_mode">list,form</field>
+        </record>
+        
+        <!-- Configuration Submenu: Tags -->
+        <menuitem id="menu_cms_tag_action" 
+                  name="Tags" 
+                  parent="menu_cms_configuration" 
+                  action="action_cms_tag" 
+                  sequence="30"/>
+        
+        <!-- Action untuk Subscribers -->
+        <record id="action_cms_subscribers" model="ir.actions.act_window">
+            <field name="name">Subscribers</field>
+            <field name="res_model">mail.followers</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('res_model', '=', 'cms.content')]</field>
+        </record>
+        
+        <!-- Configuration Submenu: Subscribers -->
+        <menuitem id="menu_cms_subscribers" 
+                  name="Subscribers" 
+                  parent="menu_cms_configuration" 
+                  action="action_cms_subscribers" 
+                  sequence="40"/>
+    </data>
+</odoo>

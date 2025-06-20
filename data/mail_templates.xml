@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Definisi template email Anda di sini -->
+        <!-- Contoh kosong jika belum ada -->
+        
+        <menuitem id="menu_cms_subscribers" 
+                  name="Subscribers" 
+                  parent="menu_cms_configuration" 
+                  action="action_cms_subscribers"
+                  groups="content_management_system.group_cms_manager"
+                  sequence="20"/>
+                  
+        <!-- Template untuk notifikasi saat konten dipublish -->
+        <record id="email_template_cms_content_published" model="mail.template">
+            <field name="name">CMS: Content Published Notification</field>
+            <field name="model_id" ref="model_cms_content"/>
+            <field name="subject">Content Published: {{ object.name }}</field>
+            <field name="email_from">{{ (object.author_id.email_formatted or user.email_formatted) }}</field>
+            <field name="partner_to">{{ object.message_partner_ids.ids | join(',') }}</field>
+            <field name="body_html" type="html">
+                <div style="padding: 15px; background-color: #F8F8F8; border-radius: 5px;">
+                    <h2>Content Published: {{ object.name }}</h2>
+                    <p>The content "{{ object.name }}" has been published.</p>
+                    <ul>
+                        <li><strong>Author:</strong> {{ object.author_id.name }}</li>
+                        <li><strong>Category:</strong> {{ object.category_id.name or 'Uncategorized' }}</li>
+                        <li><strong>Published Date:</strong> {{ format_datetime(object.date_published, tz=user.tz) }}</li>
+                    </ul>
+                    <div style="margin-top: 20px;">
+                        <a href="/web#id={{ object.id }}&amp;model=cms.content&amp;view_type=form" 
+                           style="display: inline-block; padding: 10px 15px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 4px;">
+                            View Content
+                        </a>
+                    </div>
+                </div>
+            </field>
+            <field name="lang">{{ object.author_id.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+    </data>
+</odoo>
