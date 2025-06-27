@@ -1,5 +1,5 @@
 {
-    'name': 'Content Management System',
+    'name': 'cms_module',
     'version': '1.0',
     'category': 'Website',
     'summary': 'Manage website content with categories, tags, and public API',
